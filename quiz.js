@@ -56,13 +56,34 @@
         }
     }
     
-    
+    //Renders question and corresponding answers to the page
+    function renderQuestion(question, i = 0){
+        if(question.answers.length === i){
+            document.getElementById("question").textContent = question.text;
+            return;
+        }
+        var el = document.createElement("div");
+        el.textContent = question.answers[i].text;
+        el.setAttribute("style", "display: flex; justify-content: center;");
+        el.setAttribute("index", i);
+        document.getElementById("answers").appendChild(el);
+        renderQuestion(question, ++i);
+    }
 
+    //Create event listeners for answers rendered to the page
+    function createListeners(i = 0){
+       if(document.getElementById("answers").children.length === i) return;
+       document.getElementById("answers").children[i].addEventListener("click", function(){
+           alert("I've been clicked");
+           console.log(this.getAttribute("index"));
+       });
+       createListeners(++i);
+    }
 
+    renderQuestion(generateQuestions()[0]);
+    createListeners();
 
-
-   
-
+  
 
 
 
