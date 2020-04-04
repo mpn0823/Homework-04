@@ -1,53 +1,38 @@
 "use strict";
 (()=>{
-    
-    //Returns a new question object
-    function newQuestion(text, answers = []){
+     //Returns a set of n questions
+     function generateQuestions(n = 10, arr = []){
+        if(arr.length === n) return arr;
+        //question object definition
         var question = {
-            text: "",
-            answers: [],
+            text: "<question text>",
+            answers: generateAnswers(),
         }
-        question.text = text;
-        question.answers = answers;
-        return JSON.parse(JSON.stringify(question));
+        //randomize order of answers
+        question.answers.sort((a, b)=>{return 0.5 - Math.random()})
+        return generateQuestions(n, arr.concat(question));
     }
 
-    //Returns a new answer object
-    function newAnswer(text, isRight){
+    //Returns a set of n answers
+    function generateAnswers(n = 4, arr = []){
+        //answer object definition
         var answer = {
             text: "",
             isRight: null,
-        };
-        answer.text = text;
-        answer.isRight = isRight;
-        return JSON.parse(JSON.stringify(answer));
+        }
+        if(arr.length === n -1){
+            answer.text = "<right answer text>";
+            answer.isRight = true;
+            return arr.concat(answer);
+        }
+        else{
+            answer.text = "<wrong answer text>";
+            answer.isRight = false;
+            return generateAnswers(n, arr.concat(answer));
+        }
+
     }
-
-    //Some useful functions for dealing with question objects.
-    function addAnswer(question, answer){ question.answers.push(answer); }
-    function shuffleAnswers(question){
-        question.answers.sort(function(a, b){return 0.5 - Math.random()});
-    }
-    
-    //Initialize array with randomly generated set of 10 questions with between 2 and 5
-    //corresponding answers
-    // function generateTestData(arr){
-    //     if(arr.length === 10) return;
-    //     //create a new question
-    //     var q = newQuestion("<question text>");
-    //     //add fixed number of answers
-    //     for(var i = 0; i < 3; i++){
-    //         addAnswer(q, newAnswer("<wrong answer text>", false));
-    //     }
-    //     addAnswer(q, newAnswer("<right answer text>", true));
-    //     shuffleAnswers(q);
-    //     arr.push(q);
-    //     generateTestData(arr);
-    // }
-
-    
-
-
+   
     //Render given question object to the page
     //need to rename this functino as it's doing a lot more
     //than just rendering maybe "main game loop"
@@ -76,17 +61,7 @@
 
 
 
-    var questions = [];   //set of questions
-    var currQ = 0;   //current question index
-    // console.log(generateTestData());
    
-    function foo(arr = []){
-        if(arr.length > 10) return arr;
-        return foo(arr.concat([1]));
-    }
-    console.log(foo());
-
-
 
 
 
