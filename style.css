@@ -1,0 +1,20 @@
+*{
+    margin: 0px;
+    padding: 10px;
+    /* border: 1px solid #000; */
+}
+
+body header{
+    display: flex;
+    justify-content: space-between;
+}
+
+body section p{
+    display: flex;
+    justify-content: center;
+}
+
+body section ul li{
+    display: flex;
+    justify-content: center;
+}
