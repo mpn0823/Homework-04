@@ -6,7 +6,6 @@
         var question = {
             text: "",
             answers: [],
-            index: 0,
         }
         question.text = text;
         question.answers = answers;
@@ -25,24 +24,7 @@
     }
 
     //Some useful functions for dealing with question objects.
-    function answerCount(question){ return question.answers.length; }
-    
-    function addAnswer(question, answer){ question.answers.push([answer]); }
-    
-    function hasNextAnswer(question){ return question.index < question.answers.length; }
-    
-    function hasPrevAnswer(question){ return question.index > -1; }
-    
-    function nextAnswer(question){
-        if(question.index != question.answers.length - 1) question.index++;
-        return question.answers[question.index];
-    }
-    
-    function prevAnswer(question){
-        if(question.index > 0) question.index--;
-        return question.answers[question.index];
-    }
-    
+    function addAnswer(question, answer){ question.answers.push(answer); }
     function shuffleAnswers(question){
         question.answers.sort(function(a, b){return 0.5 - Math.random()});
     }
@@ -63,13 +45,24 @@
         generateTestData(arr);
     }
 
+    //Render given question object to the page
+    function renderQuestion(question){
+        document.getElementById("question").textContent = question.text;
+        for(var i = 0; i < question.answers.length; i++){
+            let el = document.createElement("div");
+            el.textContent = question.answers[i].text;
+            el.setAttribute("style", "display: flex; justify-content: center;")
+            document.getElementById("answers").append(el);
+        }
+    }
     
     var questionArr = [];
     generateTestData(questionArr);
-    console.log(questionArr);
-    
+    console.log(questionArr[0].answers.length);
+    renderQuestion(questionArr[0]);
 
-
+   
+   
 
 
 
