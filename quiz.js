@@ -1,3 +1,11 @@
+// _                 _      __  __         _   _         _                           _ 
+// | |               | |    |  \/  |       | \ | |       | |                         | |
+// | |     ___   ___ | | __ | \  / | __ _  |  \| | ___   | |     ___   ___  _ __  ___| |
+// | |    / _ \ / _ \| |/ / | |\/| |/ _` | | . ` |/ _ \  | |    / _ \ / _ \| '_ \/ __| |
+// | |___| (_) | (_) |   <  | |  | | (_| | | |\  | (_) | | |___| (_) | (_) | |_) \__ \_|
+// |______\___/ \___/|_|\_\ |_|  |_|\__,_| |_| \_|\___/  |______\___/ \___/| .__/|___(_)
+//                                                                         | |          
+//                                                                         |_|          
 "use strict";
 (() => {
     //Initial game state
@@ -6,6 +14,13 @@
     var data;       //array of questions
     var index;      //current question
     var interval;   //reference for timer object
+
+    // localStorage.clear();
+
+    //references to HTML to make following code more concise
+    var questionEl = document.getElementById("question");
+    var answersEl = document.getElementById("answers");
+    var timerEl = document.getElementById("time");
     playGame();
     
     //Returns a set of n questions
@@ -44,22 +59,21 @@
     //Renders question and corresponding answers to the page
     function renderQuestion(question, i = 0) {
         if (question.answers.length === i) {
-            document.getElementById("question").textContent = question.text;
+            questionEl.textContent = question.text;
             return;
         }
         var el = document.createElement("li");
         el.textContent = question.answers[i].text;
         // el.setAttribute("style", "display: flex; justify-content: center;");
         el.setAttribute("index", i);
-        document.getElementById("answers").appendChild(el);
+        answersEl.appendChild(el);
         renderQuestion(question, ++i);
     }
 
     //Create event listeners for answers rendered to the page
     function createListeners(i = 0) {
-        if (document.getElementById("answers").children.length === i) return;
-        document.getElementById("answers").children[i].addEventListener("click", function () {
-            console.log(data[index].answers[this.getAttribute("index")].isRight);
+        if (answersEl.children.length === i) return;
+        answersEl.children[i].addEventListener("click", function () {
             if (data[index].answers[this.getAttribute("index")].isRight === false) time -= penalty;
             index++;
             if (index === data.length || time <= 0) gameOver();
@@ -72,15 +86,15 @@
     function renderTime() {
         var minutes = Math.floor(time / 60);
         var seconds = Math.floor(time % 60);
-        if(time <= 0) document.getElementById("time").textContent = "0:00";
-        else if (seconds < 10) document.getElementById("time").textContent = minutes + ":0" + seconds;
-        else document.getElementById("time").textContent = minutes + ":" + seconds;
+        if(time <= 0) timerEl.textContent = "0:00";
+        else if (seconds < 10) timerEl.textContent = minutes + ":0" + seconds;
+        else timerEl.textContent = minutes + ":" + seconds;
     }
 
     //Move the game forward by advancing to next
     //question and update game state
     function gameStep() {
-        document.getElementById("answers").innerHTML = "";
+        answersEl.innerHTML = "";
         renderQuestion(data[index]);
         createListeners();
     }
@@ -89,14 +103,16 @@
     //exhausted
     function gameOver() {
         clearInterval(interval);
-        document.getElementById("answers").innerHTML = "";
-        document.getElementById("question").textContent = "Game Over";
+        answersEl.innerHTML = "";
+        questionEl.textContent = "Game Over";
         var el = document.createElement("li");
         el.textContent = "PLAY AGAIN";
         el.addEventListener("click", ()=>{
             playGame();
         });
-        document.getElementById("answers").appendChild(el);
+        answersEl.appendChild(el);
+        saveScore();
+        renderHighScores();
     }
 
     //Starts a new game
@@ -106,7 +122,7 @@
         penalty = 60;
         data = generateQuestions();
         index = 0;
-        document.getElementById("answers").innerHTML = "";
+        answersEl.innerHTML = "";
         var el = document.createElement("li");
         el.textContent = "START";
         el.addEventListener("click", ()=>{
@@ -114,15 +130,30 @@
             setInterval(() => {renderTime();}, 50);
             gameStep();
         });
-        document.getElementById("answers").appendChild(el);
+        answersEl.appendChild(el);
     }
 
     
+    //Prompts user for initials and saves score to persistent storage
+    function saveScore(){
+        var scores = JSON.parse(localStorage.getItem("scores"));
+        if(scores === null) scores = [];
+        var str = prompt("Enter your initials").toUpperCase();
+        console.log(str != null);
+        if(str != null) scores.push({initials: str, score: time});
+        localStorage.setItem("scores", JSON.stringify(scores));
+    }
 
-
-
+    function logScores(){
+        console.log(JSON.parse(localStorage.getItem("scores")));
+    }
    
-
+    //Renders high score list to the page
+    function renderHighScores(){
+        var scores = JSON.parse(localStorage.getItem("scores"));
+        scores.sort((a, b) => b.score - a.score)
+        
+    }
 
 
 

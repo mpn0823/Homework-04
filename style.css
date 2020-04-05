@@ -29,3 +29,16 @@ li:hover{
     color: black;
     background-color: orange;
 }
+
+input{
+    display: flex;
+    justify-content: center;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+   color: red;
+}
