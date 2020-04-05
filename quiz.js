@@ -112,7 +112,6 @@
         });
         answersEl.appendChild(el);
         saveScore();
-        renderHighScores();
     }
 
     //Starts a new game
@@ -138,7 +137,7 @@
     function saveScore(){
         var scores = JSON.parse(localStorage.getItem("scores"));
         if(scores === null) scores = [];
-        var str = prompt("Enter your initials").toUpperCase();
+        var str = prompt("Enter your initials").toUpperCase().slice(0, 3);
         console.log(str != null);
         if(str != null) scores.push({initials: str, score: time});
         localStorage.setItem("scores", JSON.stringify(scores));

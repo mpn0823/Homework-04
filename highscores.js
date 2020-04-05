@@ -6,9 +6,10 @@
     scores.sort((a, b) => b.score - a.score)
     var listEl = document.getElementById("list");
     //display top 20 high scores
-    for(var i = 0; i < 20; i++){
+    for(var i = 0; i < scores.length; i++){
+        if(i === 20) break;
         var el = document.createElement("li");
-        el.textContent = scores[i].initials + "\t\t\t" + formatTime(scores[i].score);
+        el.textContent = scores[i].initials + "\t" + formatTime(scores[i].score);
         listEl.appendChild(el);
     }
 
@@ -17,7 +18,7 @@
     function formatTime(time){
         var minutes = Math.floor(time / 60);
         var seconds = time % 60;
-        if(time <= 0) return "00:00";
+        if(time <= 0) return "0:00";
         if(seconds < 10) return minutes + ":0" + seconds;
         return minutes + ":" + seconds;
     }
