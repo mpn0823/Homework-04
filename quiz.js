@@ -22,7 +22,7 @@
     var answersEl = document.getElementById("answers");
     var timerEl = document.getElementById("time");
     playGame();
-    
+
     //Returns a set of n questions
     function generateQuestions(n = 10, arr = []) {
         if (arr.length === n) return arr;
@@ -53,7 +53,6 @@
             answer.isRight = false;
             return generateAnswers(n, arr.concat(answer));
         }
-
     }
 
     //Renders question and corresponding answers to the page
@@ -86,7 +85,7 @@
     function renderTime() {
         var minutes = Math.floor(time / 60);
         var seconds = time % 60;
-        if(time <= 0) timerEl.textContent = "0:00";
+        if (time <= 0) timerEl.textContent = "0:00";
         else if (seconds < 10) timerEl.textContent = minutes + ":0" + seconds;
         else timerEl.textContent = minutes + ":" + seconds;
     }
@@ -107,7 +106,7 @@
         questionEl.textContent = "Game Over";
         var el = document.createElement("li");
         el.textContent = "PLAY AGAIN";
-        el.addEventListener("click", ()=>{
+        el.addEventListener("click", () => {
             playGame();
         });
         answersEl.appendChild(el);
@@ -115,7 +114,7 @@
     }
 
     //Starts a new game
-    function playGame(){
+    function playGame() {
         //intialize game state
         time = 300;
         penalty = 60;
@@ -124,43 +123,22 @@
         answersEl.innerHTML = "";
         var el = document.createElement("li");
         el.textContent = "START";
-        el.addEventListener("click", ()=>{
-            interval = setInterval(() => {if(time > 0) time--;}, 1000);
-            setInterval(() => {renderTime();}, 50);
+        el.addEventListener("click", () => {
+            interval = setInterval(() => { if (time > 0) time--; }, 1000);
+            setInterval(() => { renderTime(); }, 50);
             gameStep();
         });
         answersEl.appendChild(el);
     }
 
-    
+
     //Prompts user for initials and saves score to persistent storage
-    function saveScore(){
+    function saveScore() {
         var scores = JSON.parse(localStorage.getItem("scores"));
-        if(scores === null) scores = [];
+        if (scores === null) scores = [];
         var str = prompt("Enter your initials").toUpperCase().slice(0, 3);
         console.log(str != null);
-        if(str != null) scores.push({initials: str, score: time});
+        if (str != null) scores.push({ initials: str, score: time });
         localStorage.setItem("scores", JSON.stringify(scores));
     }
-
-    function logScores(){
-        console.log(JSON.parse(localStorage.getItem("scores")));
-    }
-   
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 })();
