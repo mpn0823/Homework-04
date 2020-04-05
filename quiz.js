@@ -33,29 +33,6 @@
 
     }
    
-    //Render given question object to the page
-    //need to rename this functino as it's doing a lot more
-    //than just rendering maybe "main game loop"
-    function gameLoop(question){
-        document.getElementById("answers").innerHTML = "";
-        document.getElementById("question").textContent = question.text;
-        for(var i = 0; i < question.answers.length; i++){
-            let el = document.createElement("div");
-            el.textContent = question.answers[i].text;
-            el.setAttribute("style", "display: flex; justify-content: center;")
-            el.setAttribute("index", i);
-            document.getElementById("answers").append(el);
-            el.addEventListener("click", function(){
-                if(questionArr[currQ].answers[this.getAttribute("index")].isRight === true){}
-                    //handle right answer chosen
-                else{}
-                    //handle wrong answer chosen
-                currQ++;
-                gameLoop(questionArr[currQ]);
-            })
-        }
-    }
-    
     //Renders question and corresponding answers to the page
     function renderQuestion(question, i = 0){
         if(question.answers.length === i){
@@ -74,8 +51,7 @@
     function createListeners(i = 0){
        if(document.getElementById("answers").children.length === i) return;
        document.getElementById("answers").children[i].addEventListener("click", function(){
-           alert("I've been clicked");
-           console.log(this.getAttribute("index"));
+           
        });
        createListeners(++i);
     }
@@ -83,10 +59,20 @@
     renderQuestion(generateQuestions()[0]);
     createListeners();
 
-  
+    var time = 600;
+    setInterval(() => {
+        renderTime();
+        time--;
+    }, 1000);
 
+    function renderTime(){
+        var minutes = Math.floor(time/60);
+        var seconds = time % 60;
+        if(seconds < 10) document.getElementById("time").textContent = minutes + ":0" + seconds;
+        else document.getElementById("time").textContent = minutes + ":" + seconds;
+    }
 
-
+    
 
 
 
