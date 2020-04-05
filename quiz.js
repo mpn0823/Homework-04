@@ -1,6 +1,7 @@
 "use strict";
 (()=>{
-     //Returns a set of n questions
+     
+    //Returns a set of n questions
      function generateQuestions(n = 10, arr = []){
         if(arr.length === n) return arr;
         //question object definition
@@ -51,20 +52,13 @@
     function createListeners(i = 0){
        if(document.getElementById("answers").children.length === i) return;
        document.getElementById("answers").children[i].addEventListener("click", function(){
-           
+           if(data[index].answers[this.getAttribute("index")].isRight === false) time -= penalty;
+            gameStep();
        });
        createListeners(++i);
     }
 
-    renderQuestion(generateQuestions()[0]);
-    createListeners();
-
-    var time = 600;
-    setInterval(() => {
-        renderTime();
-        time--;
-    }, 1000);
-
+   //Renders remaining time to the page
     function renderTime(){
         var minutes = Math.floor(time/60);
         var seconds = time % 60;
@@ -72,10 +66,30 @@
         else document.getElementById("time").textContent = minutes + ":" + seconds;
     }
 
-    
+     //Move the game forward by advancing to next
+    //questiona and updating game state
+    function gameStep(){
+        document.getElementById("answers").innerHTML = "";
+        renderQuestion(data[index]);
+        createListeners();
+        index++;
+    }
 
+    //main loop
+    var time = 600;
+    var penalty = 60;
+    var data = generateQuestions();
+    var index = 0;
+    //set game state
+    document.getElementById("start").addEventListener("click", ()=>{
+        setInterval(() => {
+            time--;
+            renderTime();
+        }, 1000);
+        gameStep();
+    })
 
-
+   
 
 
 
