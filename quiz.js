@@ -52,7 +52,9 @@
     function createListeners(i = 0){
        if(document.getElementById("answers").children.length === i) return;
        document.getElementById("answers").children[i].addEventListener("click", function(){
-           if(data[index].answers[this.getAttribute("index")].isRight === false) time -= penalty;
+            console.log(data[index].answers[this.getAttribute("index")].isRight);
+            if(data[index].answers[this.getAttribute("index")].isRight === false) time -= penalty;
+            index++;
             gameStep();
        });
        createListeners(++i);
@@ -67,12 +69,13 @@
     }
 
      //Move the game forward by advancing to next
-    //questiona and updating game state
+    //question and update game state
     function gameStep(){
         document.getElementById("answers").innerHTML = "";
         renderQuestion(data[index]);
         createListeners();
-        index++;
+        // debug();
+        // index++;
     }
 
     //main loop
@@ -83,14 +86,20 @@
     //set game state
     document.getElementById("start").addEventListener("click", ()=>{
         setInterval(() => {
-            time--;
+            if(time > 0) time--;
             renderTime();
         }, 1000);
         gameStep();
     })
 
    
-
+    //Print gamestate to the console
+    function debug(){
+        console.log(data[index]);
+        console.log(time);
+        console.log(index);
+        console.log(document.getElementById("answers").innerHTML);
+    }
 
 
 
