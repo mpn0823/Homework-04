@@ -47,7 +47,7 @@
             document.getElementById("question").textContent = question.text;
             return;
         }
-        var el = document.createElement("div");
+        var el = document.createElement("li");
         el.textContent = question.answers[i].text;
         // el.setAttribute("style", "display: flex; justify-content: center;");
         el.setAttribute("index", i);
@@ -91,7 +91,7 @@
         index = 0;
         document.getElementById("answers").innerHTML = "";
         document.getElementById("question").textContent = "Game Over";
-        var el = document.createElement("div");
+        var el = document.createElement("li");
         el.textContent = "PLAY AGAIN";
         el.addEventListener("click", ()=>{
             playGame();
@@ -107,7 +107,7 @@
         data = generateQuestions();
         index = 0;
         document.getElementById("answers").innerHTML = "";
-        var el = document.createElement("div");
+        var el = document.createElement("li");
         el.textContent = "START";
         el.addEventListener("click", ()=>{
             interval = setInterval(() => {if(time > 0) time--;}, 1000);

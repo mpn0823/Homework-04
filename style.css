@@ -1,6 +1,8 @@
 *{
     margin: 0px;
     padding: 10px;
+    color: orange;
+    background-color: black;
     /* border: 1px solid #000; */
 }
 
@@ -14,12 +16,14 @@ body section p{
     justify-content: center;
 }
 
-body section ul li{
+li{
     display: flex;
     justify-content: center;
+    border: solid;
+    margin: 10px;
 }
 
-div{
-    display: flex;
-    justify-content: center;
+li:hover{
+    color: black;
+    background-color: orange;
 }
