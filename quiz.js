@@ -71,7 +71,7 @@
     //Renders remaining time to the page
     function renderTime() {
         var minutes = Math.floor(time / 60);
-        var seconds = time % 60;
+        var seconds = Math.floor(time % 60);
         if (seconds < 10) document.getElementById("time").textContent = minutes + ":0" + seconds;
         else document.getElementById("time").textContent = minutes + ":" + seconds;
     }
@@ -110,10 +110,8 @@
         var el = document.createElement("div");
         el.textContent = "START";
         el.addEventListener("click", ()=>{
-            interval = setInterval(() => {
-                if (time > 0) time--;
-                renderTime();
-            }, 1000);
+            interval = setInterval(() => {if(time > 0) time--;}, 1000);
+            setInterval(() => {renderTime();}, 50);
             gameStep();
         });
         document.getElementById("answers").appendChild(el);
