@@ -85,7 +85,7 @@
     //Renders remaining time to the page
     function renderTime() {
         var minutes = Math.floor(time / 60);
-        var seconds = Math.floor(time % 60);
+        var seconds = time % 60;
         if(time <= 0) timerEl.textContent = "0:00";
         else if (seconds < 10) timerEl.textContent = minutes + ":0" + seconds;
         else timerEl.textContent = minutes + ":" + seconds;
@@ -148,12 +148,7 @@
         console.log(JSON.parse(localStorage.getItem("scores")));
     }
    
-    //Renders high score list to the page
-    function renderHighScores(){
-        var scores = JSON.parse(localStorage.getItem("scores"));
-        scores.sort((a, b) => b.score - a.score)
-        
-    }
+    
 
 
 
