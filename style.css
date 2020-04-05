@@ -3,6 +3,8 @@
     padding: 10px;
     color: orange;
     background-color: black;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
     /* border: 1px solid #000; */
 }
 

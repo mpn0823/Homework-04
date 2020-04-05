@@ -62,8 +62,8 @@
             console.log(data[index].answers[this.getAttribute("index")].isRight);
             if (data[index].answers[this.getAttribute("index")].isRight === false) time -= penalty;
             index++;
-            if (index < data.length) gameStep();
-            else gameOver();
+            if (index === data.length || time <= 0) gameOver();
+            else gameStep();
         });
         createListeners(++i);
     }
@@ -72,7 +72,8 @@
     function renderTime() {
         var minutes = Math.floor(time / 60);
         var seconds = Math.floor(time % 60);
-        if (seconds < 10) document.getElementById("time").textContent = minutes + ":0" + seconds;
+        if(time <= 0) document.getElementById("time").textContent = "0:00";
+        else if (seconds < 10) document.getElementById("time").textContent = minutes + ":0" + seconds;
         else document.getElementById("time").textContent = minutes + ":" + seconds;
     }
 
@@ -88,7 +89,6 @@
     //exhausted
     function gameOver() {
         clearInterval(interval);
-        index = 0;
         document.getElementById("answers").innerHTML = "";
         document.getElementById("question").textContent = "Game Over";
         var el = document.createElement("li");
@@ -102,7 +102,7 @@
     //Starts a new game
     function playGame(){
         //intialize game state
-        time = 600;
+        time = 300;
         penalty = 60;
         data = generateQuestions();
         index = 0;
