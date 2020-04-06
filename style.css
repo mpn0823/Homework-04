@@ -1,44 +1,43 @@
-*{
+/* Global styling */
+
+* {
     margin: 0px;
     padding: 10px;
     color: orange;
     background-color: black;
     font-family: 'Roboto Mono', monospace;
     font-size: 20px;
-    /* border: 1px solid #000; */
+    text-decoration: none;
 }
 
-body header{
+
+/* Flex box formatting */
+
+body header {
     display: flex;
     justify-content: space-between;
 }
 
-body section p{
+body section p {
     display: flex;
     justify-content: center;
 }
 
-li{
+li {
     display: flex;
     justify-content: center;
     border: solid;
     margin: 10px;
 }
 
-li:hover{
+
+/* Mouse over effects */
+
+li:hover {
     color: black;
     background-color: orange;
 }
 
-input{
-    display: flex;
-    justify-content: center;
-}
-
-a{
-    text-decoration: none;
-}
-
-a:hover{
-   color: red;
+a:hover {
+    color: red;
 }
