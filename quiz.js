@@ -112,7 +112,7 @@
         if (arr.length === n) return arr;
         //question object definition
         var question = {
-            text: "<question text>",
+            text: "question " + (arr.length + 1),
             answers: generateAnswers(),
         }
 
@@ -129,11 +129,11 @@
             isRight: null,
         }
         if (arr.length === n - 1) {
-            answer.text = "<right answer text>";
+            answer.text = "right answer";
             answer.isRight = true;
             return arr.concat(answer);
         } else {
-            answer.text = "<wrong answer text>";
+            answer.text = "wrong answer";
             answer.isRight = false;
             return generateAnswers(n, arr.concat(answer));
         }
